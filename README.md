@@ -1,5 +1,5 @@
 
-# node-red-contrib-skoda-connect
+# node-red-contrib-myskoda
 
 [![NPM version](http://img.shields.io/npm/v/node-red-contrib-myskoda.svg)](https://www.npmjs.com/package/node-red-contrib-myskoda)
 [![Downloads](https://img.shields.io/npm/dm/node-red-contrib-myskoda.svg)](https://www.npmjs.com/package/node-red-contrib-myskoda)
@@ -22,7 +22,7 @@ Simple nodes for getting car information from the **MySkoda** platform and sendi
 
 ```bash
 cd ~/.node-red
-npm install node-red-contrib-skoda-connect
+npm install node-red-contrib-myskoda
 ```
 
 ## Usage: skoda-get node
