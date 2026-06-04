@@ -65,15 +65,15 @@
 
     <h3>Inputs</h3>
     <dl class="message-properties">
-        <dt class="required">msg.vin<span class="property-type">string</span></dt>
-        <dd>VIN number of car. Use the myskoda-get node to query it.</dd>
+        <dt class="optional">msg.vin<span class="property-type">string</span></dt>
+        <dd>VIN number of car. Overrides the VIN from the Account config node.</dd>
 
         <dt class="optional">msg.payload<span class="property-type">number</span></dt>
         <dd>For "Set Target Temperature": temperature in Celsius (e.g. 21.5)<br/>
             For "Set Charge Limit": limit in percent (e.g. 80)</dd>
 
         <dt class="optional">msg.spin<span class="property-type">string</span></dt>
-        <dd>Required for Lock/Unlock commands (your S-PIN)</dd>
+        <dd>Required for Lock/Unlock commands. Overrides the S-PIN from the Account config node.</dd>
 
         <dt class="optional">msg.latitude / msg.longitude<span class="property-type">number</span></dt>
         <dd>Required for Honk and Flash / Flash commands (vehicle position)</dd>

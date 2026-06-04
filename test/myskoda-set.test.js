@@ -50,8 +50,18 @@ function makeFlow(command) {
 }
 
 const defaultCredentials = {
+    cred1: { email: 'test@test.com', password: 'pass123', vin: VIN, spin: SPIN },
+    n1: { email: 'test@test.com', password: 'pass123', vin: VIN, spin: SPIN },
+};
+
+const noVinCredentials = {
     cred1: { email: 'test@test.com', password: 'pass123' },
     n1: { email: 'test@test.com', password: 'pass123' },
+};
+
+const noSpinCredentials = {
+    cred1: { email: 'test@test.com', password: 'pass123', vin: VIN },
+    n1: { email: 'test@test.com', password: 'pass123', vin: VIN },
 };
 
 // ─── Tests ───────────────────────────────────────────────────────────────────
@@ -97,7 +107,7 @@ describe('myskoda-set node', () => {
     it('should report error when VIN is missing', (done) => {
         mockLoginFlow(mock);
 
-        helper.load(nodeTypes, makeFlow('startAC'), defaultCredentials, () => {
+        helper.load(nodeTypes, makeFlow('startAC'), noVinCredentials, () => {
             const n1 = helper.getNode('n1');
             n1.on('call:error', (call) => {
                 try {
@@ -112,7 +122,7 @@ describe('myskoda-set node', () => {
     it('should report error when VIN is empty string', (done) => {
         mockLoginFlow(mock);
 
-        helper.load(nodeTypes, makeFlow('startAC'), defaultCredentials, () => {
+        helper.load(nodeTypes, makeFlow('startAC'), noVinCredentials, () => {
             const n1 = helper.getNode('n1');
             n1.on('call:error', (call) => {
                 try {
@@ -138,7 +148,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            helper.getNode('n1').receive({ payload: true, vin: VIN });
+            helper.getNode('n1').receive({ payload: true });
         });
     });
 
@@ -154,7 +164,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            helper.getNode('n1').receive({ payload: true, vin: VIN });
+            helper.getNode('n1').receive({ payload: true });
         });
     });
 
@@ -172,7 +182,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            helper.getNode('n1').receive({ payload: 22, vin: VIN });
+            helper.getNode('n1').receive({ payload: 22 });
         });
     });
 
@@ -188,7 +198,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            helper.getNode('n1').receive({ payload: 21.5, vin: VIN });
+            helper.getNode('n1').receive({ payload: 21.5 });
         });
     });
 
@@ -203,7 +213,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            n1.receive({ payload: 'not-a-number', vin: VIN });
+            n1.receive({ payload: 'not-a-number' });
         });
     });
 
@@ -218,7 +228,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            n1.receive({ payload: '22', vin: VIN });
+            n1.receive({ payload: '22' });
         });
     });
 
@@ -236,7 +246,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            helper.getNode('n1').receive({ payload: true, vin: VIN });
+            helper.getNode('n1').receive({ payload: true });
         });
     });
 
@@ -252,7 +262,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            helper.getNode('n1').receive({ payload: true, vin: VIN });
+            helper.getNode('n1').receive({ payload: true });
         });
     });
 
@@ -270,7 +280,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            helper.getNode('n1').receive({ payload: true, vin: VIN });
+            helper.getNode('n1').receive({ payload: true });
         });
     });
 
@@ -286,7 +296,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            helper.getNode('n1').receive({ payload: true, vin: VIN });
+            helper.getNode('n1').receive({ payload: true });
         });
     });
 
@@ -302,7 +312,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            helper.getNode('n1').receive({ payload: 80, vin: VIN });
+            helper.getNode('n1').receive({ payload: 80 });
         });
     });
 
@@ -317,7 +327,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            n1.receive({ payload: 'eighty', vin: VIN });
+            n1.receive({ payload: 'eighty' });
         });
     });
 
@@ -335,7 +345,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            helper.getNode('n1').receive({ payload: true, vin: VIN, spin: SPIN });
+            helper.getNode('n1').receive({ payload: true });
         });
     });
 
@@ -351,37 +361,37 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            helper.getNode('n1').receive({ payload: true, vin: VIN, spin: SPIN });
+            helper.getNode('n1').receive({ payload: true });
         });
     });
 
     it('should reject lock command without SPIN', (done) => {
         mockLoginFlow(mock);
 
-        helper.load(nodeTypes, makeFlow('lock'), defaultCredentials, () => {
+        helper.load(nodeTypes, makeFlow('lock'), noSpinCredentials, () => {
             const n1 = helper.getNode('n1');
             n1.on('call:error', (call) => {
                 try {
-                    expect(call.firstArg.message).toContain('msg.spin is required');
+                    expect(call.firstArg.message).toContain('spin is required');
                     done();
                 } catch (err) { done(err); }
             });
-            n1.receive({ payload: true, vin: VIN });
+            n1.receive({ payload: true });
         });
     });
 
     it('should reject unlock command without SPIN', (done) => {
         mockLoginFlow(mock);
 
-        helper.load(nodeTypes, makeFlow('unlock'), defaultCredentials, () => {
+        helper.load(nodeTypes, makeFlow('unlock'), noSpinCredentials, () => {
             const n1 = helper.getNode('n1');
             n1.on('call:error', (call) => {
                 try {
-                    expect(call.firstArg.message).toContain('msg.spin is required');
+                    expect(call.firstArg.message).toContain('spin is required');
                     done();
                 } catch (err) { done(err); }
             });
-            n1.receive({ payload: true, vin: VIN });
+            n1.receive({ payload: true });
         });
     });
 
@@ -399,7 +409,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            helper.getNode('n1').receive({ payload: true, vin: VIN, latitude: 50.0755, longitude: 14.4378 });
+            helper.getNode('n1').receive({ payload: true, latitude: 50.0755, longitude: 14.4378 });
         });
     });
 
@@ -414,7 +424,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            n1.receive({ payload: true, vin: VIN });
+            n1.receive({ payload: true });
         });
     });
 
@@ -430,7 +440,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            helper.getNode('n1').receive({ payload: true, vin: VIN, latitude: 50.0755, longitude: 14.4378 });
+            helper.getNode('n1').receive({ payload: true, latitude: 50.0755, longitude: 14.4378 });
         });
     });
 
@@ -445,7 +455,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            n1.receive({ payload: true, vin: VIN });
+            n1.receive({ payload: true });
         });
     });
 
@@ -463,7 +473,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            helper.getNode('n1').receive({ payload: true, vin: VIN });
+            helper.getNode('n1').receive({ payload: true });
         });
     });
 
@@ -486,7 +496,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            n1.receive({ payload: true, vin: VIN });
+            n1.receive({ payload: true });
         });
     });
 
@@ -504,7 +514,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            n1.receive({ payload: true, vin: VIN, spin: SPIN });
+            n1.receive({ payload: true });
         });
     });
 
@@ -520,7 +530,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            n1.receive({ payload: true, vin: VIN });
+            n1.receive({ payload: true });
         });
     });
 
@@ -540,7 +550,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            n1.receive({ payload: true, vin: VIN, spin: SPIN });
+            n1.receive({ payload: true });
         });
     });
 
@@ -558,7 +568,7 @@ describe('myskoda-set node', () => {
                     done();
                 } catch (err) { done(err); }
             });
-            helper.getNode('n1').receive({ payload: true, vin: VIN });
+            helper.getNode('n1').receive({ payload: true });
         });
     });
 });

@@ -20,8 +20,14 @@ module.exports = function (RED) {
 
                 await node._flow.skodaLib.connect(credentials);
 
-                if (!msg.vin || msg.vin === "") {
-                    throw new Error("VIN is not defined. Pass msg.vin with the vehicle VIN.");
+                var vin = msg.vin || (credentialsNode && credentialsNode.credentials.vin);
+                if (!vin || vin === "") {
+                    throw new Error("VIN is not defined. Set it in the Account config or pass msg.vin.");
+                }
+                msg.vin = vin;
+
+                if (!msg.spin && credentialsNode && credentialsNode.credentials.spin) {
+                    msg.spin = credentialsNode.credentials.spin;
                 }
 
                 let result = null;

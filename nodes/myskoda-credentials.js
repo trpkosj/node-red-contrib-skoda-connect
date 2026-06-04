@@ -6,7 +6,9 @@ module.exports = function (RED) {
     RED.nodes.registerType("myskoda-credentials", MySkodaCredentialsNode, {
         credentials: {
             email: { type: "text" },
-            password: { type: "password" }
+            password: { type: "password" },
+            vin: { type: "text" },
+            spin: { type: "password" }
         }
     });
 }
