@@ -26,6 +26,7 @@
     "files": [
         "lib/",
         "nodes/",
+        "examples/",
         "README.md",
         "LICENSE"
     ],
